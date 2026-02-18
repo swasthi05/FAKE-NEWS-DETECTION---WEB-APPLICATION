@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Account</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #141e30, #243b55);
+        }
+
+        .box {
+            backdrop-filter: blur(14px);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            border-radius: 16px;
+            width: 360px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h2 { color: white; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        a { color: #00c6ff; text-decoration: none; display: block; margin-top: 15px; }
+
+        .msg {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .success { background: #22c55e; }
+        .error { background: #ef4444; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>🧠 Create Account</h2>
+
+    {% if message %}
+        <div class="msg {% if success %}success{% else %}error{% endif %}">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="Choose Username" required>
+        <input type="password" name="password" placeholder="Create Password" required>
+        <button type="submit">Register</button>
+    </form>
+
+    <a href="/">← Back to Login</a>
+</div>
+
+</body>
+</html>

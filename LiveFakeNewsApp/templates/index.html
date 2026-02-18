@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI News Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #020617;
+            color: white;
+        }
+
+        .topbar {
+            background: #020617;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .topbar a {
+            color: #f87171;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #2563eb, #1e40af);
+            margin: 20px;
+            padding: 40px;
+            border-radius: 18px;
+            text-align: center;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 25px;
+        }
+
+        input, select, button {
+            padding: 12px;
+            margin: 5px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 25px;
+        }
+
+        .stat-box {
+            background: #020617;
+            padding: 18px 30px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        /* PREMIUM CARD */
+        .news-card {
+            display: flex;
+            gap: 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            padding: 18px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transition: 0.3s;
+            border-left: 6px solid transparent;
+        }
+
+        .news-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .news-card.real-card {
+            border-left-color: #22c55e;
+        }
+
+        .news-card.fake-card {
+            border-left-color: #ef4444;
+        }
+
+        .news-card img {
+            width: 200px;
+            height: 140px;
+            border-radius: 14px;
+            object-fit: cover;
+        }
+
+        .news-content h3 {
+            margin: 0 0 8px;
+        }
+
+        .source {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .real-badge {
+            background: #22c55e;
+            color: black;
+        }
+
+        .fake-badge {
+            background: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <h2>⚡ AI News Intelligence</h2>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="hero">
+    <h1>🧠 AI Powered Fake News Detection</h1>
+    <p>Premium dashboard for live news analysis</p>
+</div>
+
+<div class="controls">
+    <form method="GET" action="/dashboard">
+        <input type="text" name="search" placeholder="Search news topic">
+        <select name="category">
+            <option value="general">General</option>
+            <option value="business">Business</option>
+            <option value="technology">Technology</option>
+            <option value="sports">Sports</option>
+            <option value="health">Health</option>
+        </select>
+        <button type="submit">Load News</button>
+    </form>
+</div>
+
+<div class="stats">
+    <div class="stat-box">✔ Real News: {{ real_count }}</div>
+    <div class="stat-box">❌ Fake News: {{ fake_count }}</div>
+</div>
+
+<div class="container">
+{% for n in news %}
+    <div class="news-card {% if n.result == 'REAL' %}real-card{% else %}fake-card{% endif %}">
+        {% if n.image %}
+            <img src="{{ n.image }}">
+        {% endif %}
+        <div class="news-content">
+            <h3>{{ n.title }}</h3>
+            <div class="source">Source: {{ n.source }}</div>
+            <div class="badge {% if n.result == 'REAL' %}real-badge{% else %}fake-badge{% endif %}">
+                {{ n.result }}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+</body>
+</html>
