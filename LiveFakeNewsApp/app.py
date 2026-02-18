@@ -5,6 +5,7 @@ import requests
 import pickle
 import webbrowser
 from threading import Timer
+import os
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -31,7 +32,7 @@ class AdminLog(db.Model):
 model = pickle.load(open("model.pkl", "rb"))
 vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
 
-API_KEY = "e6c91e4d48674013a395e00b49689bbe"
+API_KEY = os.environ.get("NEWS_API_KEY")
 
 # ================= AUTO OPEN BROWSER =================
 def open_browser():
@@ -198,5 +199,6 @@ if __name__ == "__main__":
     Timer(1, open_browser).start()
     print("🚀 Server starting...")
     app.run(app.run(host="0.0.0.0", port=5000))
+
 
 
